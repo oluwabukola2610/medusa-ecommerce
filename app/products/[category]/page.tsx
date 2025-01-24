@@ -7,7 +7,10 @@ interface CategoryPageProps {
 
 export async function generateStaticParams() {
   const { collections } = await medusaClient.collections.list();
-
+  if (!collections || collections.length === 0) {
+    console.error("No collections found.");
+    return [];
+  }
   return collections.map((collection: { id: string }) => ({
     category: collection.id,
   }));
