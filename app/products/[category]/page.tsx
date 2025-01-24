@@ -16,22 +16,43 @@ export async function generateStaticParams() {
   }));
 }
 
-const CategoryPage = async ({ params }: CategoryPageProps) => {
+ const CategoryPage = async ({ params }: CategoryPageProps) => {
   const { category } = params;
 
-  const { products } = await medusaClient.products.list({
-    collection_id: category ? [category] : [],
-  });
+  try {
+    const { products } = await medusaClient.products.list({
+      collection_id: category ? [category] : [],
+    });
 
-  const validProducts = products.filter((product: { id: string }) => product.id);
+    console.log("Fetched products:", products); 
 
-  return (
-    <section className="container mx-auto py-20 px-4">
-      <div className="container mx-auto py-10">
-        <CategoryFilterClient initialProducts={validProducts} />
-      </div>
-    </section>
-  );
+    const validProducts = products?.filter(
+      (product: { id: string }) => product.id
+    ) || [];
+
+    if (validProducts.length === 0) {
+      return (
+        <section className="container mx-auto py-20 px-4">
+          <p>No products found for this category.</p>
+        </section>
+      );
+    }
+
+    return (
+      <section className="container mx-auto py-20 px-4">
+        <div className="container mx-auto py-10">
+          <CategoryFilterClient initialProducts={validProducts} />
+        </div>
+      </section>
+    );
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return (
+      <section className="container mx-auto py-20 px-4">
+        <p>Failed to load products. Please try again later.</p>
+      </section>
+    );
+  }
 };
 
-export default CategoryPage;
+export default CategoryPage
