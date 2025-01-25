@@ -5,8 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Home = async () => {
-  const { collections } = await medusaClient.collections.list();
-  const { products } = await medusaClient.products.list();
+  const { collections = [] } = await medusaClient.collections
+    .list()
+    .catch(() => ({}));
+  const { products = [] } = await medusaClient.products
+    .list()
+    .catch(() => ({}));
 
   return (
     <>
@@ -39,27 +43,27 @@ const Home = async () => {
         </div>
       </section>
       <section className="container mx-auto py-20 px-4">
-          {collections.length > 0 ? (
-            collections.map(
-              (collection: { id: string; title?: string }, index: number) => (
-                <CategorySection
-                  key={collection.id}
-                  category={{
-                    id: collection.id,
-                    title: collection.title || "Untitled Collection",
-                  }}
-                  products={products.filter(
-                    (product: { collection: { id: string } }) =>
-                      product.collection?.id === collection.id
-                  )}
-                  isLast={index === collections.length - 1}
-                />
-              )
+        {collections.length > 0 ? (
+          collections.map(
+            (collection: { id: string; title?: string }, index: number) => (
+              <CategorySection
+                key={collection.id}
+                category={{
+                  id: collection.id,
+                  title: collection.title || "Untitled Collection",
+                }}
+                products={products.filter(
+                  (product: { collection: { id: string } }) =>
+                    product.collection?.id === collection.id
+                )}
+                isLast={index === collections.length - 1}
+              />
             )
-          ) : (
-            <div>No collections found</div>
-          )}
-        </section>
+          )
+        ) : (
+          <div>No collections found</div>
+        )}
+      </section>
     </>
   );
 };
