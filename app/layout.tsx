@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import {  Montserrat } from "next/font/google";
+import {  Poppins } from "next/font/google";
 import Head from "next/head"; 
 import "./globals.css";
 
 
-const geistSans = Montserrat({ subsets: ["cyrillic"], weight: ["400", "700", "800"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700", "800"] });
 
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" /> 
         <meta name="description" content={metadata.description ?? ''} /> 
       </Head>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${poppins.className} antialiased`}>
         {children}
       </body>
     </html>

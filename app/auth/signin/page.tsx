@@ -55,7 +55,6 @@ const SignIn = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
-        {" "}
         <h1 className="text-2xl font-bold mb-6">Sign In</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-96">

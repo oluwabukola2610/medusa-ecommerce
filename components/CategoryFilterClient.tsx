@@ -4,6 +4,13 @@ import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import { generateFixedPrice } from "@/helper/PriceGenerator";
 
+type ProductProps = {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+};
+
 type CategoryFilterClientProps = {
   initialProducts: ProductProps[];
 };
@@ -21,19 +28,19 @@ export default function CategoryFilterClient({
 
     if (value === "price-asc") {
       sortedProducts.sort((a, b) => {
-        const priceA = parseFloat(generateFixedPrice(a.id).slice(1)); 
-        const priceB = parseFloat(generateFixedPrice(b.id).slice(1)); 
-        return priceA - priceB; 
+        const priceA = parseFloat(generateFixedPrice(a.id)); 
+        const priceB = parseFloat(generateFixedPrice(b.id));
+        return priceA - priceB;
       });
     } else if (value === "price-desc") {
       sortedProducts.sort((a, b) => {
-        const priceA = parseFloat(generateFixedPrice(a.id).slice(1)); 
-        const priceB = parseFloat(generateFixedPrice(b.id).slice(1)); 
-        return priceB - priceA; 
+        const priceA = parseFloat(generateFixedPrice(a.id));
+        const priceB = parseFloat(generateFixedPrice(b.id));
+        return priceB - priceA;
       });
     }
 
-    setProducts(sortedProducts); 
+    setProducts(sortedProducts);
   };
 
   return (

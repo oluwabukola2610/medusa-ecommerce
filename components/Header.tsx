@@ -6,13 +6,11 @@ import { useCartStore } from "@/store/StoreSlice";
 
 const Header = () => {
   const [searchExpanded, setSearchExpanded] = useState(false);
-  const { cart } = useCartStore();
-
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const { cartCount } = useCartStore();
 
   return (
     <header className="bg-[#F8F9FB] fixed z-20 w-full">
-      <div className="container mx-auto flex items-center justify-between py-4">
+      <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center space-x-1 text-primary bg-white p-2">
           <AlignJustify size={20} />
           <span className="text-primary hidden lg:block">Menu</span>
@@ -23,7 +21,7 @@ const Header = () => {
         <nav className="flex items-center space-x-4">
           <div
             className={`flex items-center text-primary bg-white p-2 rounded transition-all duration-300 ${
-              searchExpanded ? "w-96 mr-4" : "w-8"
+              searchExpanded ? "w-24 sm:w-64 md:w-96 mr-2" : "w-8"
             }`}
           >
             <Search
@@ -34,7 +32,7 @@ const Header = () => {
             {searchExpanded && (
               <input
                 type="text"
-                className="ml-2 flex-1 focus:outline-none"
+                className="ml-2 w-full focus:outline-none"
                 placeholder="Search"
               />
             )}
@@ -63,4 +61,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

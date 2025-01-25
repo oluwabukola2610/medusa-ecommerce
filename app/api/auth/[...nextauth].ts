@@ -6,7 +6,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -16,14 +16,14 @@ export const authOptions: AuthOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            username: credentials.username,
+            email: credentials.email,
             password: credentials.password,
           }),
         });
       
         if (!response.ok) return null;
       
-        return { id: "1", username: credentials.username };
+        return { id: "1", email: credentials.email };
       },
       
     }),

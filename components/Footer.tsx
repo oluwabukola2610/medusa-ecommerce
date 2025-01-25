@@ -26,8 +26,8 @@ const FooterSection = () => {
   return (
     <section className="bg-[#F8F9FB] py-10">
       <div className="container mx-auto px-4">
-        <div className="flex items-center md:items-start font-light text-start flex-col mb-10  w-full md:max-w-2xl">
-          <h2 className="text-[18px] md:text-[42px] text-black mb-4 text-center">
+        <div className="flex items-center md:items-start font-light text-start flex-col mb-10  w-full md:max-w-3xl">
+          <h2 className="text-[18px] md:text-[42px] text-black mb-4 ">
             Launch Your E-Commerce today with our ready-made template.
           </h2>
           <Link

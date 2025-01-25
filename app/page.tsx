@@ -1,5 +1,6 @@
 import ProductCard from "@/components/ProductCard";
 import { medusaClient } from "@/medusaClient";
+import GitHub from "@/public/svg/GitHub";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,7 +29,8 @@ const Home = async () => {
               href="/"
               className="bg-white text-black py-3 px-6 rounded shadow border flex items-center gap-3"
             >
-              View on GitHub
+              View on Github
+              <GitHub />
             </Link>
           </div>
           <div className="w-full h-full lg:h-[70%] lg:w-[70%]">

@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { generateFixedPrice } from "@/helper/PriceGenerator";
 import { useCartStore } from "@/store/StoreSlice";
 import Image from "next/image";
@@ -23,54 +22,59 @@ const ProductDetailsPage = ({ product }: ProductDetailsProps) => {
     addToCart(product);
   };
 
-  console.log(product);
-
   return (
-    <div className="container mx-auto py-12 px-6 ">
-      <div className="md:flex-row  flex flex-col gap-8">
-        <div className="  md:w-[96] md:h-96 rounded-lg shadow p-3">
+    <div className="container mx-auto py-12 px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div className="relative rounded-lg shadow overflow-hidden">
           <Image
-            width={500}
-            height={500}
+            width={300}
+            height={300}
             src={product.thumbnail}
             alt={product.title}
             className="object-cover w-full h-full"
           />
+          <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs px-3 py-1 rounded">
+            New
+          </div>
         </div>
-        <div className="flex flex-row md:flex-col gap-6">
-          {product.images.length > 0 &&
-            product.images.map((image, index) => (
-              <div
-                key={index}
-                className="w-24 h-24 rounded-lg overflow-hidden shadow-md"
-              >
-                <Image
-                  width={200}
-                  height={200}
-                  src={image.url}
-                  className="object-cover w-full h-full"
-                  alt={`Image ${index + 1} of ${product.title}`}
-                />
-              </div>
-            ))}
+        <div className="space-y-6">
+          <h1 className="text-3xl font-semibold text-gray-800">
+            {product.title}
+          </h1>
+          <p className="text-lg text-gray-600">{product.description}</p>
+          <div className="text-3xl font-bold text-blue-600">${fixedPrice}</div>
+          <button
+            onClick={handleAddToCart}
+            className="w-full md:w-auto bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
+          >
+            Add to Cart
+          </button>
+          <div className="">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              More Images
+            </h2>
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
+              {product.images.length > 0 &&
+                product.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="w-full h-24 md:h-32 rounded-lg overflow-hidden"
+                  >
+                    <Image
+                      width={200}
+                      height={200}
+                      src={image.url}
+                      alt={`Image ${index + 1} of ${product.title}`}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Product Description */}
-      <p className="mt-6 text-lg text-gray-600 md:max-w-md">
-        {product.description}
-      </p>
-
-      <div className="flex items-center gap-4">
-        <span className="text-3xl font-semibold">${fixedPrice}</span>
-      </div>
-
-      <button
-        onClick={handleAddToCart}
-        className="w-full md:w-1/2 mt-4 bg-blue-600 text-white py-3 rounded"
-      >
-        Add to Cart
-      </button>
+      <div className="hidden md:absolute -z-10 w-64 h-64 md:w-96 md:h-96 bg-blue-200 opacity-50 rounded-full blur-xl transform -translate-y-20 md:-translate-y-32 right-10"></div>
     </div>
   );
 };
