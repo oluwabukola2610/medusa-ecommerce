@@ -11,7 +11,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
   const validProducts = products?.filter((product: { id: string }) => product.id) || [];
 
   return (
-    <div>
+    <div className="container mx-auto py-12 px-6 mt-12">
       {validProducts.length > 0 ? (
         <CategoryFilterClient initialProducts={validProducts} />
       ) : (

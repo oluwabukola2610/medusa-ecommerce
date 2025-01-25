@@ -39,23 +39,27 @@ const Home = async () => {
         </div>
       </section>
       <section className="container mx-auto py-20 px-4">
-        {collections.map(
-          (collection: { id: string; title?: string }, index: number) => (
-            <CategorySection
-              key={collection.id}
-              category={{
-                id: collection.id,
-                title: collection.title || "Untitled Collection", // Provide default value
-              }}
-              products={products.filter(
-                (product: { collection: { id: string } }) =>
-                  product.collection?.id === collection.id
-              )}
-              isLast={index === collections.length - 1}
-            />
-          )
-        )}
-      </section>
+          {collections.length > 0 ? (
+            collections.map(
+              (collection: { id: string; title?: string }, index: number) => (
+                <CategorySection
+                  key={collection.id}
+                  category={{
+                    id: collection.id,
+                    title: collection.title || "Untitled Collection",
+                  }}
+                  products={products.filter(
+                    (product: { collection: { id: string } }) =>
+                      product.collection?.id === collection.id
+                  )}
+                  isLast={index === collections.length - 1}
+                />
+              )
+            )
+          ) : (
+            <div>No collections found</div>
+          )}
+        </section>
     </>
   );
 };
