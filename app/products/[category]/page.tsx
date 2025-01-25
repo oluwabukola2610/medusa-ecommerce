@@ -5,53 +5,41 @@ interface CategoryPageProps {
   params: { category: string };
 }
 
+
 export async function generateStaticParams() {
-  const { collections } = await medusaClient.collections.list();
-  if (!collections || collections.length === 0) {
-    console.error("No collections found.");
-    return [];
+  try {
+    const { collections } = await medusaClient.collections.list();
+    return collections.map((collection: { id: string }) => ({
+      category: collection.id.toString()
+    }));
+  } catch (error) {
+    console.error("Failed to generate static params:", error);
+    return []; 
   }
-  return collections.map((collection: { id: string }) => ({
-    category: collection.id,
-  }));
 }
 
- const CategoryPage = async ({ params }: CategoryPageProps) => {
-  const { category } = params;
-
+const CategoryPage = async ({ params }: CategoryPageProps) => {
   try {
+    const { category } = params;
+
     const { products } = await medusaClient.products.list({
       collection_id: category ? [category] : [],
     });
 
-    console.log("Fetched products:", products); 
-
-    const validProducts = products?.filter(
-      (product: { id: string }) => product.id
-    ) || [];
-
-    if (validProducts.length === 0) {
-      return (
-        <section className="container mx-auto py-20 px-4">
-          <p>No products found for this category.</p>
-        </section>
-      );
-    }
+    const validProducts = products?.filter((product: { id: string }) => product.id) || [];
 
     return (
-      <section className="container mx-auto py-20 px-4">
-        <div className="container mx-auto py-10">
+      <div>
+        {validProducts.length > 0 ? (
           <CategoryFilterClient initialProducts={validProducts} />
-        </div>
-      </section>
+        ) : (
+          <div>No products found</div>
+        )}
+      </div>
     );
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return (
-      <section className="container mx-auto py-20 px-4">
-        <p>Failed to load products. Please try again later.</p>
-      </section>
-    );
+    console.error("Category page rendering error:", error);
+    return <div>Error loading products</div>;
   }
 };
 
